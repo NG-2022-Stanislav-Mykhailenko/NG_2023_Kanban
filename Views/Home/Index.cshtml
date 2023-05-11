@@ -1,0 +1,14 @@
+@using NG_2023_Kanban.Entities
+@{
+     var user = ViewData["Account"] as User;
+ }
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Kanban service</p>
+    <p>Logged in as @user.Id</p>
+</div>
