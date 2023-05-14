@@ -6,6 +6,6 @@
 
         public virtual ICollection<User>? Users { get; set; } = new HashSet<User>();
 
-        public virtual ICollection<Card>? Cards { get; set; } = new HashSet<Card>(); 
+        public virtual ICollection<Column>? Columns { get; set; } = new HashSet<Column>(); 
     }
 }

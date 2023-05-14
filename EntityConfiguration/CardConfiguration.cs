@@ -17,13 +17,16 @@ namespace NG_2023_Kanban.EntityConfiguration
             builder.Property(x => x.Description).IsRequired();
             builder.Property(x => x.Description).HasMaxLength(100);
 
-            builder.Property(x => x.Column).IsRequired();
-            builder.Property(x => x.Column).HasMaxLength(100);
+            builder
+                .HasOne(x => x.Sender)
+                .WithMany(x => x.Cards)
+                .HasForeignKey(x => x.SenderId)
+                .HasPrincipalKey(x => x.Id);
 
             builder
-                .HasOne(x => x.Board)
+                .HasOne(x => x.Column)
                 .WithMany(x => x.Cards)
-                .HasForeignKey(x => x.BoardId)
+                .HasForeignKey(x => x.ColumnId)
                 .HasPrincipalKey(x => x.Id);
         }
     }
