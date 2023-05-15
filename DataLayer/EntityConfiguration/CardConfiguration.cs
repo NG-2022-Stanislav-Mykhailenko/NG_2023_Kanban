@@ -1,8 +1,8 @@
-﻿using NG_2023_Kanban.Entities;
+﻿using NG_2023_Kanban.DataLayer.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace NG_2023_Kanban.EntityConfiguration
+namespace NG_2023_Kanban.DataLayer.EntityConfiguration
 {
     public class CardConfiguration : IEntityTypeConfiguration<Card>
     {

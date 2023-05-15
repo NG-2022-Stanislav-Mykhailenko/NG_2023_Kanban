@@ -1,8 +1,8 @@
-﻿using NG_2023_Kanban.Entities;
-using NG_2023_Kanban.EntityConfiguration;
+﻿using NG_2023_Kanban.DataLayer.Entities;
+using NG_2023_Kanban.DataLayer.EntityConfiguration;
 using Microsoft.EntityFrameworkCore;
 
-namespace NG_2023_Kanban.DbStartup
+namespace NG_2023_Kanban.DataLayer.DbStartup
 {
     public class DatabaseContext : DbContext
     {

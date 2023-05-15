@@ -1,4 +1,4 @@
-﻿namespace NG_2023_Kanban.DbStartup
+﻿namespace NG_2023_Kanban.DataLayer.DbStartup
 {
     public class DbInitializer
     {

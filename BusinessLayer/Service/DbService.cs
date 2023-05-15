@@ -1,8 +1,8 @@
-﻿using NG_2023_Kanban.DbStartup;
-using NG_2023_Kanban.Entities;
+﻿using NG_2023_Kanban.DataLayer.DbStartup;
+using NG_2023_Kanban.DataLayer.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace NG_2023_Kanban.Service
+namespace NG_2023_Kanban.BusinessLayer.Service
 {
     public class DbService
     {

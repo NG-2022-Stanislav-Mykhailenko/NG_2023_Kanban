@@ -1,7 +1,7 @@
-﻿using NG_2023_Kanban.Service;
+﻿using NG_2023_Kanban.BusinessLayer.Service;
 using Microsoft.EntityFrameworkCore;
 
-namespace NG_2023_Kanban.DbStartup
+namespace NG_2023_Kanban.DataLayer.DbStartup
 {
     public static class Injecting
     {

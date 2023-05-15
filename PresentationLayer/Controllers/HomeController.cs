@@ -1,11 +1,11 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using NG_2023_Kanban.Entities;
+using NG_2023_Kanban.DataLayer.Entities;
 using NG_2023_Kanban.Extensions;
-using NG_2023_Kanban.Models;
-using NG_2023_Kanban.Service;
+using NG_2023_Kanban.DataLayer.Models;
+using NG_2023_Kanban.BusinessLayer.Service;
 
-namespace NG_2023_Kanban.Controllers;
+namespace NG_2023_Kanban.PresentationLayer.Controllers;
 
 public class HomeController : Controller
 {

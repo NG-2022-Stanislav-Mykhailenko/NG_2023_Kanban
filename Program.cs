@@ -1,4 +1,4 @@
-using NG_2023_Kanban.DbStartup;
+using NG_2023_Kanban.DataLayer.DbStartup;
 
 var builder = WebApplication.CreateBuilder(args);
 

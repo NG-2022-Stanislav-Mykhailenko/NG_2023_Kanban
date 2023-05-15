@@ -1,4 +1,4 @@
-﻿namespace NG_2023_Kanban.Entities
+﻿namespace NG_2023_Kanban.DataLayer.Entities
 {
     public class Card : BaseEntity
     {
