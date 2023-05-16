@@ -18,7 +18,8 @@ namespace NG_2023_Kanban.DataLayer.EntityConfiguration
                 .HasOne(x => x.Sender)
                 .WithMany(x => x.Comments)
                 .HasForeignKey(x => x.SenderId)
-                .HasPrincipalKey(x => x.Id);
+                .HasPrincipalKey(x => x.Id)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder
                 .HasOne(x => x.Card)

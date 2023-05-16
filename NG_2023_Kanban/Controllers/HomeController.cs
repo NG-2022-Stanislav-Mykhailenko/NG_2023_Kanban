@@ -5,14 +5,14 @@ using NG_2023_Kanban.Extensions;
 using NG_2023_Kanban.DataLayer.Models;
 using NG_2023_Kanban.BusinessLayer.Service;
 
-namespace NG_2023_Kanban.PresentationLayer.Controllers;
+namespace NG_2023_Kanban.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly DbService _service;
+    private readonly BusinessService _service;
     private readonly ILogger<HomeController> _logger;
 
-    public HomeController(ILogger<HomeController> logger, DbService service)
+    public HomeController(ILogger<HomeController> logger, BusinessService service)
     {
         _logger = logger;
         _service = service;
@@ -82,13 +82,7 @@ public class HomeController : Controller
 
         try
         {
-            User account = await _service.AddAsync(new User
-            {
-                FullName = fullName,
-                Username = username,
-                Password = password, // TODO: hashing
-                IsAdmin = false
-            });
+            User account = await _service.RegisterAsync(fullName, username, password);
 
             HttpContext.Session.SetObject("Account", account);
             return Redirect("/Home/Index");

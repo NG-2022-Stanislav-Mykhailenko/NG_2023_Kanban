@@ -2,14 +2,15 @@
 using NG_2023_Kanban.DataLayer.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace NG_2023_Kanban.BusinessLayer.Service
+namespace NG_2023_Kanban.DataLayer.Service
 {
-    public class DbService
+    public class DataService
     {
         private readonly DatabaseContext _context;
-        public DbService(DatabaseContext context) 
+        public DataService(DatabaseContext context) 
         {
             _context = context;
+            _context.Database.EnsureCreated();
         }
 
         public async Task<User> AddAsync(User entity)
