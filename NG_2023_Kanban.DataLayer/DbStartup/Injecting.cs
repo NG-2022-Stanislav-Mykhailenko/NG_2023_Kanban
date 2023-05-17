@@ -1,5 +1,4 @@
-﻿using NG_2023_Kanban.DataLayer.Service;
-﻿using NG_2023_Kanban.DataLayer.Repositories;
+using NG_2023_Kanban.DataLayer.Repositories;
 ﻿using NG_2023_Kanban.DataLayer.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
