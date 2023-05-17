@@ -14,9 +14,6 @@ namespace NG_2023_Kanban.DataLayer.EntityConfiguration
             builder.Property(x => x.Name).IsRequired();
             builder.Property(x => x.Name).HasMaxLength(100);
 
-            builder.Property(x => x.Board).IsRequired();
-            builder.Property(x => x.Board).HasMaxLength(100);
-
             builder
                 .HasOne(x => x.Board)
                 .WithMany(x => x.Columns)

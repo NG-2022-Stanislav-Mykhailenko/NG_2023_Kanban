@@ -3,19 +3,19 @@ using Microsoft.AspNetCore.Mvc;
 using NG_2023_Kanban.DataLayer.Entities;
 using NG_2023_Kanban.Extensions;
 using NG_2023_Kanban.DataLayer.Models;
-using NG_2023_Kanban.BusinessLayer.Service;
+using NG_2023_Kanban.BusinessLayer.Services;
 
 namespace NG_2023_Kanban.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly BusinessService _service;
+    private readonly UserService _userService;
     private readonly ILogger<HomeController> _logger;
 
-    public HomeController(ILogger<HomeController> logger, BusinessService service)
+    public HomeController(ILogger<HomeController> logger, UserService userService)
     {
         _logger = logger;
-        _service = service;
+        _userService = userService;
     }
 
     public IActionResult Index()
@@ -39,13 +39,13 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Login(string username, string password)
+    public async Task<IActionResult> Login(User user)
     {
         User? currentAccount = HttpContext.Session.GetObject<User>("Account");
         if (currentAccount != null)
             return Redirect("/Home/Index");
 
-        User? account = await _service.LoginAsync(username, password);
+        User? account = await _userService.LoginAsync(user);
         if (account != null)
         {
             HttpContext.Session.SetObject("Account", account);
@@ -74,7 +74,7 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Register(string fullName, string username, string password)
+    public async Task<IActionResult> Register(User user)
     {
         User? currentAccount = HttpContext.Session.GetObject<User>("Account");
         if (currentAccount != null)
@@ -82,7 +82,7 @@ public class HomeController : Controller
 
         try
         {
-            User account = await _service.RegisterAsync(fullName, username, password);
+            User account = await _userService.RegisterAsync(user);
 
             HttpContext.Session.SetObject("Account", account);
             return Redirect("/Home/Index");

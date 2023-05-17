@@ -7,7 +7,7 @@
         public string Username { get; set; }
         public string Password { get; set; }
 
-        public bool IsAdmin { get; set; }
+        public bool IsAdmin { get; set; } = false;
 
         public virtual ICollection<Board>? Boards { get; set; } = new HashSet<Board>();
         public virtual ICollection<Card>? Cards { get; set; } = new HashSet<Card>();
