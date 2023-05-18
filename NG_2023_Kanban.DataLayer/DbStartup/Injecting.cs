@@ -20,15 +20,11 @@ namespace NG_2023_Kanban.DataLayer.DbStartup
 
             var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
 
-            optionsBuilder.UseSqlServer(configuration["ConnectionString"]);
-
             services.AddDbContext<DatabaseContext>(options =>
             {
                 options.UseSqlServer(
                     configuration["ConnectionString"]);
             });
-
-            (new DatabaseContext(optionsBuilder.Options)).Database.EnsureCreated(); // possibly misplaced
         }
     }
 }
