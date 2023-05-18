@@ -1,4 +1,4 @@
-namespace NG_2023_Kanban.DataLayer.Models;
+namespace NG_2023_Kanban.Models;
 
 public class ErrorViewModel
 {

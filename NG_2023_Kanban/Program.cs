@@ -1,3 +1,4 @@
+using NG_2023_Kanban;
 using NG_2023_Kanban.BusinessLayer.Inject;
 using NG_2023_Kanban.DataLayer.DbStartup;
 
@@ -7,6 +8,7 @@ IConfiguration configuration = builder.Configuration;
 
 builder.Services.InjectDAL(configuration);
 builder.Services.InjectBLL();
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

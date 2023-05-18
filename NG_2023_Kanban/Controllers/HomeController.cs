@@ -1,8 +1,10 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using NG_2023_Kanban.DataLayer.Entities;
+using AutoMapper;
+using NG_2023_Kanban.Models;
+using NG_2023_Kanban.DTOs;
 using NG_2023_Kanban.Extensions;
-using NG_2023_Kanban.DataLayer.Models;
+using NG_2023_Kanban.BusinessLayer.Models;
 using NG_2023_Kanban.BusinessLayer.Services;
 
 namespace NG_2023_Kanban.Controllers;
@@ -11,16 +13,18 @@ public class HomeController : Controller
 {
     private readonly UserService _userService;
     private readonly ILogger<HomeController> _logger;
+    private readonly IMapper _mapper;
 
-    public HomeController(ILogger<HomeController> logger, UserService userService)
+    public HomeController(ILogger<HomeController> logger, UserService userService, IMapper mapper)
     {
         _logger = logger;
         _userService = userService;
+        _mapper = mapper;
     }
 
     public IActionResult Index()
     {
-        User? currentAccount = HttpContext.Session.GetObject<User>("Account");
+        var currentAccount = HttpContext.Session.GetObject<UserDto>("Account");
         if (currentAccount != null)
         {
             ViewData["Account"] = currentAccount;
@@ -31,7 +35,7 @@ public class HomeController : Controller
 
     public IActionResult Login()
     {
-        User? currentAccount = HttpContext.Session.GetObject<User>("Account");
+        var currentAccount = HttpContext.Session.GetObject<UserDto>("Account");
         if (currentAccount != null)
             return Redirect("/Home/Index");
 
@@ -39,13 +43,16 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Login(User user)
+    public async Task<IActionResult> Login(UserDto user)
     {
-        User? currentAccount = HttpContext.Session.GetObject<User>("Account");
+        var currentAccount = HttpContext.Session.GetObject<UserDto>("Account");
         if (currentAccount != null)
             return Redirect("/Home/Index");
 
-        User? account = await _userService.LoginAsync(user);
+        var model = _mapper.Map<UserModel>(user);
+
+        var account = _mapper.Map<UserDto>(await _userService.LoginAsync(model));
+
         if (account != null)
         {
             HttpContext.Session.SetObject("Account", account);
@@ -66,7 +73,7 @@ public class HomeController : Controller
 
     public IActionResult Register()
     {
-        User? currentAccount = HttpContext.Session.GetObject<User>("Account");
+        var currentAccount = HttpContext.Session.GetObject<UserDto>("Account");
         if (currentAccount != null)
             return Redirect("/Home/Index");
 
@@ -74,15 +81,16 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Register(User user)
+    public async Task<IActionResult> Register(UserDto user)
     {
-        User? currentAccount = HttpContext.Session.GetObject<User>("Account");
+        var currentAccount = HttpContext.Session.GetObject<UserDto>("Account");
         if (currentAccount != null)
             return Redirect("/Home/Index");
 
         try
         {
-            User account = await _userService.RegisterAsync(user);
+            var model = _mapper.Map<UserModel>(user);
+            var account = _mapper.Map<UserDto>(await _userService.RegisterAsync(model));
 
             HttpContext.Session.SetObject("Account", account);
             return Redirect("/Home/Index");

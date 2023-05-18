@@ -1,4 +1,4 @@
-﻿using NG_2023_Kanban.BusinessLayer.Services;
+using NG_2023_Kanban.BusinessLayer.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace NG_2023_Kanban.BusinessLayer.Inject
@@ -8,6 +8,7 @@ namespace NG_2023_Kanban.BusinessLayer.Inject
         public static void InjectBLL(
             this IServiceCollection services)
         {
+            services.AddAutoMapper(typeof(MappingProfile));
             services.AddScoped<UserService>();
         }
     }
