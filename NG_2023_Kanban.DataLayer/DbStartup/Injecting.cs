@@ -18,8 +18,6 @@ namespace NG_2023_Kanban.DataLayer.DbStartup
             services.AddTransient<ICommentRepository, CommentRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
 
-            var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
-
             services.AddDbContext<DatabaseContext>(options =>
             {
                 options.UseSqlServer(
