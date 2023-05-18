@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using NG_2023_Kanban.Models;
 using NG_2023_Kanban.DTOs;
-using NG_2023_Kanban.Extensions;
 using NG_2023_Kanban.BusinessLayer.Models;
 using NG_2023_Kanban.BusinessLayer.Services;
 
@@ -22,12 +21,12 @@ public class HomeController : Controller
         _mapper = mapper;
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        var currentAccount = HttpContext.Session.GetObject<UserDto>("Account");
-        if (currentAccount != null)
+        var currentAccount = HttpContext.Session.GetInt32("Account");
+        if (currentAccount.HasValue)
         {
-            ViewData["Account"] = currentAccount;
+            ViewData["Account"] = _mapper.Map<UserDto>(await _userService.GetAsync(currentAccount.Value));
             return View();
         }
         return Redirect("/Home/Login");
@@ -35,7 +34,7 @@ public class HomeController : Controller
 
     public IActionResult Login()
     {
-        var currentAccount = HttpContext.Session.GetObject<UserDto>("Account");
+        var currentAccount = HttpContext.Session.GetInt32("Account");
         if (currentAccount != null)
             return Redirect("/Home/Index");
 
@@ -45,7 +44,7 @@ public class HomeController : Controller
     [HttpPost]
     public async Task<IActionResult> Login(UserDto user)
     {
-        var currentAccount = HttpContext.Session.GetObject<UserDto>("Account");
+        var currentAccount = HttpContext.Session.GetInt32("Account");
         if (currentAccount != null)
             return Redirect("/Home/Index");
 
@@ -55,7 +54,7 @@ public class HomeController : Controller
 
         if (account != null)
         {
-            HttpContext.Session.SetObject("Account", account);
+            HttpContext.Session.SetInt32("Account", account.Id);
             return Redirect("/Home/Index");
         }
         else
@@ -73,7 +72,7 @@ public class HomeController : Controller
 
     public IActionResult Register()
     {
-        var currentAccount = HttpContext.Session.GetObject<UserDto>("Account");
+        var currentAccount = HttpContext.Session.GetInt32("Account");
         if (currentAccount != null)
             return Redirect("/Home/Index");
 
@@ -83,7 +82,7 @@ public class HomeController : Controller
     [HttpPost]
     public async Task<IActionResult> Register(UserDto user)
     {
-        var currentAccount = HttpContext.Session.GetObject<UserDto>("Account");
+        var currentAccount = HttpContext.Session.GetInt32("Account");
         if (currentAccount != null)
             return Redirect("/Home/Index");
 
@@ -92,7 +91,7 @@ public class HomeController : Controller
             var model = _mapper.Map<UserModel>(user);
             var account = _mapper.Map<UserDto>(await _userService.RegisterAsync(model));
 
-            HttpContext.Session.SetObject("Account", account);
+            HttpContext.Session.SetInt32("Account", account.Id);
             return Redirect("/Home/Index");
         }
         catch

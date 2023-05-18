@@ -18,6 +18,11 @@ namespace NG_2023_Kanban.BusinessLayer.Services
             _mapper = mapper;
         }
 
+        public async Task<UserModel> GetAsync(int id)
+        {
+            return _mapper.Map<UserModel>(await _userRepository.GetAsync(id));
+        }
+
         public async Task<UserModel?> LoginAsync(UserModel user)
         {
             var data = await _userRepository.FindAsync(x => x.Username == user.Username && x.Password == user.Password);
