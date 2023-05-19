@@ -1,3 +1,5 @@
+using NG_2023_Kanban.DataLayer.Enums;
+
 ﻿namespace NG_2023_Kanban.DataLayer.Entities
 {
     public class User : BaseEntity
@@ -7,7 +9,7 @@
         public string Username { get; set; }
         public string Password { get; set; }
 
-        public bool IsAdmin { get; set; } = false;
+        public int Role { get; set; } = (int)Roles.User;
 
         public virtual ICollection<Board>? Boards { get; set; } = new HashSet<Board>();
         public virtual ICollection<Card>? Cards { get; set; } = new HashSet<Card>();
