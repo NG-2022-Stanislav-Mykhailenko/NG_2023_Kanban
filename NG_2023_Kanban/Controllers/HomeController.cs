@@ -29,76 +29,7 @@ public class HomeController : Controller
             ViewData["Account"] = _mapper.Map<UserDto>(await _userService.GetAsync(currentAccount.Value));
             return View();
         }
-        return Redirect("/Home/Login");
-    }
-
-    public IActionResult Login()
-    {
-        var currentAccount = HttpContext.Session.GetInt32("Account");
-        if (currentAccount != null)
-            return Redirect("/Home/Index");
-
-        return View();
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> Login(UserDto user)
-    {
-        var currentAccount = HttpContext.Session.GetInt32("Account");
-        if (currentAccount != null)
-            return Redirect("/Home/Index");
-
-        var model = _mapper.Map<UserModel>(user);
-
-        var account = _mapper.Map<UserDto>(await _userService.LoginAsync(model));
-
-        if (account != null)
-        {
-            HttpContext.Session.SetInt32("Account", account.Id);
-            return Redirect("/Home/Index");
-        }
-        else
-        {
-            ViewData["Error"] = "Invalid credentials.";
-            return View();
-        }
-    }
-
-    public IActionResult Logout()
-    {
-        HttpContext.Session.Remove("Account");
-        return Redirect("/Home/Login");
-    }
-
-    public IActionResult Register()
-    {
-        var currentAccount = HttpContext.Session.GetInt32("Account");
-        if (currentAccount != null)
-            return Redirect("/Home/Index");
-
-        return View();
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> Register(UserDto user)
-    {
-        var currentAccount = HttpContext.Session.GetInt32("Account");
-        if (currentAccount != null)
-            return Redirect("/Home/Index");
-
-        try
-        {
-            var model = _mapper.Map<UserModel>(user);
-            var account = _mapper.Map<UserDto>(await _userService.RegisterAsync(model));
-
-            HttpContext.Session.SetInt32("Account", account.Id);
-            return Redirect("/Home/Index");
-        }
-        catch
-        {
-            ViewData["Error"] = "This name is already taken.";
-            return View();
-        }
+        return Redirect("/Auth/Login");
     }
 
     public IActionResult Privacy()

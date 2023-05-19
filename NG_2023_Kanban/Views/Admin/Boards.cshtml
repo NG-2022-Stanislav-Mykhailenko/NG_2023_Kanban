@@ -1,0 +1,18 @@
+@using NG_2023_Kanban.DTOs
+@{
+    var boards = ViewData["Boards"] as ICollection<BoardDto>;
+}
+
+@{
+    ViewData["Title"] = "Boards";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Boards</h1>
+    @{
+        foreach (var board in boards)
+        {
+            <p>@board.Name</p>
+        }
+    }
+</div>

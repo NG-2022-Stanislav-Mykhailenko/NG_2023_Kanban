@@ -9,6 +9,7 @@ namespace NG_2023_Kanban.BusinessLayer.Inject
             this IServiceCollection services)
         {
             services.AddAutoMapper(typeof(MappingProfile));
+            services.AddScoped<BoardService>();
             services.AddScoped<UserService>();
         }
     }
