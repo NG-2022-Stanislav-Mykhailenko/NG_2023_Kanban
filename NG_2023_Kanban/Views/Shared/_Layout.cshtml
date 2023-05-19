@@ -1,4 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@using NG_2023_Kanban.Enums
+
+﻿@using NG_2023_Kanban.DTOs
+@{
+     var user = ViewData["Account"] as UserDto;
+ }
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -18,16 +25,33 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav me-auto">
+                        @if (user != null)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            if (user.Role == (int)Roles.Administrator)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Boards">Boards</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Users">Users</a>
+                                </li>
+                            }
+                        }
+                    </ul>
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            @if (ViewData["Account"] == null)
-                                {
+                            @if (user == null)
+                            {
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login">Log in</a>
-                                }
+                            }
                             else
-                                {
+                            {
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Log out</a>
-                                }
+                            }
                         </li>
                     </ul>
                 </div>
