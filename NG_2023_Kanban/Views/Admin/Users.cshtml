@@ -12,7 +12,8 @@
     @{
         foreach (var user in users)
         {
-            <p>@user.Username</p>
+            <p>@user.Username | <a href="/Admin/EditUser/@user.Id">Edit</a>, <a href="/Admin/DeleteUser/@user.Id">Delete</a></p>
         }
+        <p><a href="/Admin/CreateUser">New</a></p>
     }
 </div>

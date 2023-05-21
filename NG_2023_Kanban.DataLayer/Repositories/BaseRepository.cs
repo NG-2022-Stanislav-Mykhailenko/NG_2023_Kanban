@@ -2,6 +2,7 @@
 using NG_2023_Kanban.DataLayer.Entities;
 using NG_2023_Kanban.DataLayer.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace NG_2023_Kanban.DataLayer.Repositories;
 
@@ -30,9 +31,20 @@ public class BaseRepository<T> : IRepository<T> where T : BaseEntity
         await _context.SaveChangesAsync();
     }
 
-    public async Task UpdateAsync(T entity)
+    public async Task UpdateAsync(int id, T entity)
     {
-        _context.Set<T>().Update(entity);
+        var updated = await GetAsync(id);
+        foreach (PropertyInfo propertyInfo in entity.GetType().GetProperties())
+        {
+            string name = propertyInfo.Name;
+            var value = propertyInfo.GetValue(entity);
+            if (value != null)
+            {
+                PropertyInfo setProperty = updated.GetType().GetProperty(name);
+                setProperty.SetValue(updated, value);
+            }
+        }
+        //_context.Set<T>().Update(entity);
         await _context.SaveChangesAsync();
     }
 

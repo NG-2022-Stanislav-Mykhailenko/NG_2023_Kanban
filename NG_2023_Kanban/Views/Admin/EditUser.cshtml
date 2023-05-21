@@ -1,0 +1,44 @@
+﻿@using NG_2023_Kanban.Enums
+
+@using NG_2023_Kanban.DTOs
+@{
+     var user = ViewData["EditedAccount"] as UserDto;
+ }
+
+@{
+    ViewData["Title"] = "Edit user";
+}
+
+<div class="text-center">
+    <h1 class="display-4">@ViewData["Title"]</h1>
+@if (ViewData["Error"] != null)
+{
+    <p>@ViewData["Error"]</p>
+}
+    <form method="POST">
+        <label for="fullName">Full name: </label><br>
+        <input type="text" id="fullName" name="fullName" value="@user.FullName" required><br>
+        <label for="username">Username: </label><br>
+        <input type="text" id="username" name="username" value="@user.Username" required><br>
+        <label for="password">Password: </label><br>
+        <input type="password" id="password" name="password"><br>
+        <label for="role" >Role: </label><br>
+        <select id="role" name="role" required>
+        @{
+            foreach (var role in Roles.GetNames(typeof(Roles)))
+            {
+                var roleNumber = (int)Enum.Parse(typeof(Roles), role);
+                @if (roleNumber == user.Role)
+                {
+                    <option value="@roleNumber" selected>@role</option>
+                }
+                else
+                {
+                    <option value="@roleNumber">@role</option>
+                }
+            }
+        }
+        </select><br>
+        <button id="submit" type="submit">Submit</button>
+    </form>
+</div>

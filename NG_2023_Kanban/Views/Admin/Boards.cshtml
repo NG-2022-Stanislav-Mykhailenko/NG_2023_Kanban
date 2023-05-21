@@ -12,7 +12,8 @@
     @{
         foreach (var board in boards)
         {
-            <p>@board.Name</p>
+            <p>@board.Name | <a href="/Admin/EditBoard/@board.Id">Edit</a>, <a href="/Admin/DeleteBoard/@board.Id">Delete</a></p>
         }
+        <p><a href="/Admin/AddBoard">New</a></p>
     }
 </div>

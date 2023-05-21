@@ -55,6 +55,101 @@ public class AdminController : Controller
         return Redirect("/Auth/Login");
     }
 
+    public async Task<IActionResult> EditUser(int id)
+    {
+        var currentAccount = HttpContext.Session.GetInt32("Account");
+        if (currentAccount.HasValue)
+        {
+            var account = _mapper.Map<UserDto>(await _userService.GetAsync(currentAccount.Value));
+            if (account.Role < (int)Roles.Administrator)
+                return StatusCode(StatusCodes.Status403Forbidden);
+            ViewData["Account"] = account;
+            ViewData["EditedAccount"] = _mapper.Map<UserDto>(await _userService.GetAsync(id));
+            return View();
+        }
+        return Redirect("/Auth/Login");
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> EditUser(int id, UserDto user)
+    {
+        var currentAccount = HttpContext.Session.GetInt32("Account");
+        if (currentAccount.HasValue)
+        {
+            var account = _mapper.Map<UserDto>(await _userService.GetAsync(currentAccount.Value));
+            if (account.Role < (int)Roles.Administrator)
+                return StatusCode(StatusCodes.Status403Forbidden);
+            ViewData["Account"] = account;
+            ViewData["EditedAccount"] = _mapper.Map<UserDto>(await _userService.GetAsync(id));
+            //try
+            //{
+                user.Id = id;
+                var model = _mapper.Map<UserModel>(user);
+                await _userService.UpdateAsync(id, model);
+                return Redirect("/Admin/Users");
+            //}
+            //catch
+            //{
+            //    ViewData["Error"] = "This name is already taken.";
+            //    return View();
+            //}
+        }
+        return Redirect("/Auth/Login");
+    }
+
+    public async Task<IActionResult> CreateUser()
+    {
+        var currentAccount = HttpContext.Session.GetInt32("Account");
+        if (currentAccount.HasValue)
+        {
+            var account = _mapper.Map<UserDto>(await _userService.GetAsync(currentAccount.Value));
+            if (account.Role < (int)Roles.Administrator)
+                return StatusCode(StatusCodes.Status403Forbidden);
+            ViewData["Account"] = account;
+            return View();
+        }
+        return Redirect("/Auth/Login");
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateUser(UserDto user)
+    {
+        var currentAccount = HttpContext.Session.GetInt32("Account");
+        if (currentAccount.HasValue)
+        {
+            var account = _mapper.Map<UserDto>(await _userService.GetAsync(currentAccount.Value));
+            if (account.Role < (int)Roles.Administrator)
+                return StatusCode(StatusCodes.Status403Forbidden);
+            ViewData["Account"] = account;
+            try
+            {
+                var model = _mapper.Map<UserModel>(user);
+                await _userService.RegisterAsync(model);
+                return Redirect("/Admin/Users");
+            }
+            catch
+            {
+                ViewData["Error"] = "This name is already taken.";
+                return View();
+            }
+        }
+        return Redirect("/Auth/Login");
+    }
+
+    public async Task<IActionResult> DeleteUser(int id)
+    {
+        var currentAccount = HttpContext.Session.GetInt32("Account");
+        if (currentAccount.HasValue)
+        {
+            var account = _mapper.Map<UserDto>(await _userService.GetAsync(currentAccount.Value));
+            if (account.Role < (int)Roles.Administrator)
+                return StatusCode(StatusCodes.Status403Forbidden);
+            await _userService.DeleteAsync(id);
+            return Redirect("/Admin/Users");
+        }
+        return Redirect("/Auth/Login");
+    }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
