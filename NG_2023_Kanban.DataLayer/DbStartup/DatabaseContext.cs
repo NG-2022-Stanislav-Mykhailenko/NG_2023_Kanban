@@ -12,6 +12,7 @@ namespace NG_2023_Kanban.DataLayer.DbStartup
         public DbSet<Card> Cards { get; set; }
         public DbSet<Column> Columns { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

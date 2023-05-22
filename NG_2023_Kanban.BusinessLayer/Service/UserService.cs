@@ -54,5 +54,20 @@ namespace NG_2023_Kanban.BusinessLayer.Services
             await _userRepository.CreateAsync(entity);
             return _mapper.Map<UserModel>(entity);
         }
+
+        public async Task<bool> CheckAdminAsync(int id)
+        {
+            var user = await GetAsync(id);
+            
+            Console.WriteLine(user.Roles.Count);
+            foreach (RoleModel role in user.Roles)
+            {
+                if (role.Name == "Administrator")
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using AutoMapper;
 using NG_2023_Kanban.Models;
 using NG_2023_Kanban.DTOs;
@@ -21,14 +22,27 @@ public class HomeController : Controller
         _mapper = mapper;
     }
 
-    public async Task<IActionResult> Index()
+    public override async void OnActionExecuting(ActionExecutingContext actionContext)
     {
         var currentAccount = HttpContext.Session.GetInt32("Account");
         if (currentAccount.HasValue)
         {
-            ViewData["Account"] = _mapper.Map<UserDto>(await _userService.GetAsync(currentAccount.Value));
-            return View();
+            var userModel = await _userService.GetAsync(currentAccount.Value);
+            ViewData["Account"] = _mapper.Map<UserDto>(userModel);
+            ViewData["isAdmin"] = await _userService.CheckAdminAsync(userModel.Id);
         }
+        else
+            actionContext.Result = Redirect("/Auth/Login");
+    }
+
+    public IActionResult Index()
+    {
+        return View();
+    }
+
+    public IActionResult Logout()
+    {
+        HttpContext.Session.Remove("Account");
         return Redirect("/Auth/Login");
     }
 

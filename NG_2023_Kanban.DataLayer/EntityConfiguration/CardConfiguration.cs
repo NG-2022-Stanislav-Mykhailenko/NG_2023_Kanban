@@ -18,15 +18,21 @@ namespace NG_2023_Kanban.DataLayer.EntityConfiguration
             builder.Property(x => x.Description).HasMaxLength(100);
 
             builder
-                .HasOne(x => x.Sender)
-                .WithMany(x => x.Cards)
-                .HasForeignKey(x => x.SenderId)
+                .HasOne(x => x.Assigned)
+                .WithMany(x => x.CardsAssigned)
+                .HasForeignKey(x => x.AssignedId)
                 .HasPrincipalKey(x => x.Id);
 
             builder
                 .HasOne(x => x.Column)
                 .WithMany(x => x.Cards)
                 .HasForeignKey(x => x.ColumnId)
+                .HasPrincipalKey(x => x.Id);
+
+            builder
+                .HasOne(x => x.Sender)
+                .WithMany(x => x.CardsSent)
+                .HasForeignKey(x => x.SenderId)
                 .HasPrincipalKey(x => x.Id);
         }
     }

@@ -1,6 +1,4 @@
-﻿@using NG_2023_Kanban.Enums
-
-﻿@using NG_2023_Kanban.DTOs
+@using NG_2023_Kanban.DTOs
 @{
      var user = ViewData["Account"] as UserDto;
  }
@@ -31,7 +29,7 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                             </li>
-                            if (user.Role == (int)Roles.Administrator)
+                            if ((bool)ViewData["isAdmin"])
                             {
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Boards">Boards</a>
@@ -50,7 +48,7 @@
                             }
                             else
                             {
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Logout">Log out</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Log out</a>
                             }
                         </li>
                     </ul>

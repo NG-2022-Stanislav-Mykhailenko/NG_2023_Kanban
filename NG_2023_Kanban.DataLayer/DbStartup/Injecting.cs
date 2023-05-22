@@ -16,6 +16,7 @@ namespace NG_2023_Kanban.DataLayer.DbStartup
             services.AddTransient<ICardRepository, CardRepository>();
             services.AddTransient<IColumnRepository, ColumnRepository>();
             services.AddTransient<ICommentRepository, CommentRepository>();
+            services.AddTransient<IRoleRepository, RoleRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
 
             services.AddDbContext<DatabaseContext>(options =>

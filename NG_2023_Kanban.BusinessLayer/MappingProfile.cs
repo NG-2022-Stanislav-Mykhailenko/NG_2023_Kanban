@@ -20,6 +20,9 @@ namespace NG_2023_Kanban.BusinessLayer
             CreateMap<CommentModel, Comment>()
                 .ReverseMap();
 
+            CreateMap<RoleModel, Role>()
+                .ReverseMap();
+
             CreateMap<UserModel, User>()
                 .ReverseMap();
         }

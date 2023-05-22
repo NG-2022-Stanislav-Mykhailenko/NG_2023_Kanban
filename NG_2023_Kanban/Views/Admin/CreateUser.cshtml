@@ -1,5 +1,3 @@
-﻿@using NG_2023_Kanban.Enums
-
 @using NG_2023_Kanban.DTOs
 @{
     ViewData["Title"] = "Create user";
@@ -18,16 +16,6 @@
         <input type="text" id="username" name="username" required><br>
         <label for="password">Password: </label><br>
         <input type="password" id="password" name="password" required><br>
-        <label for="role">Role: </label><br>
-        <select id="role" name="role" required>
-        @{
-            foreach (var role in Roles.GetNames(typeof(Roles)))
-            {
-                var roleNumber = (int)Enum.Parse(typeof(Roles), role);
-                <option value="@roleNumber">@role</option>
-            }
-        }
-        </select><br>
         <button id="submit" type="submit">Submit</button>
     </form>
 </div>

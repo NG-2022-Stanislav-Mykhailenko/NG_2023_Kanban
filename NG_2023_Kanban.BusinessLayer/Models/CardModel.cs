@@ -4,11 +4,13 @@
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public int SenderId { get; set; }
+        public int AssignedId { get; set; }
         public int ColumnId { get; set; }
+        public int SenderId { get; set; }
 
-        public virtual UserModel Sender { get; set; }
+        public virtual UserModel Assigned { get; set; }
         public virtual ColumnModel Column { get; set; }
+        public virtual UserModel Sender { get; set; }
 
         public virtual ICollection<CommentModel> Comments { get; set; } = new HashSet<CommentModel>();
     }

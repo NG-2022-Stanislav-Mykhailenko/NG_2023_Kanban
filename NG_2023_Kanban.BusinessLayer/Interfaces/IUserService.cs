@@ -10,5 +10,6 @@ namespace NG_2023_Kanban.BusinessLayer.Interfaces
         Task UpdateAsync(int id, UserModel user);
         Task<UserModel?> LoginAsync(UserModel user);
         Task<UserModel> RegisterAsync(UserModel user);
+        Task<bool> CheckAdminAsync(int id);
     }
 }

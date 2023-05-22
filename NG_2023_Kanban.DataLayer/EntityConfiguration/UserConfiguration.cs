@@ -18,11 +18,13 @@ namespace NG_2023_Kanban.DataLayer.EntityConfiguration
             builder.Property(x => x.Username).IsRequired();
             builder.Property(x => x.Password).IsRequired();
 
-            builder.Property(x => x.Role).IsRequired();
-
             builder
                 .HasMany(x => x.Boards)
                 .WithMany(x => x.Users);
+
+            builder
+                .HasMany(x => x.Roles)
+                .WithMany(x => x.Members);
         }
     }
 }

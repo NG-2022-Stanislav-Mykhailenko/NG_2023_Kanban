@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using AutoMapper;
 using NG_2023_Kanban.Models;
 using NG_2023_Kanban.DTOs;
@@ -21,22 +22,21 @@ public class AuthController : Controller
         _mapper = mapper;
     }
 
-    public IActionResult Login()
+    public override void OnActionExecuting(ActionExecutingContext actionContext)
     {
         var currentAccount = HttpContext.Session.GetInt32("Account");
         if (currentAccount != null)
-            return Redirect("/Home/Index");
+            actionContext.Result = Redirect("Home/Index");
+    }
 
+    public IActionResult Login()
+    {
         return View();
     }
 
     [HttpPost]
     public async Task<IActionResult> Login(UserDto user)
     {
-        var currentAccount = HttpContext.Session.GetInt32("Account");
-        if (currentAccount != null)
-            return Redirect("/Home/Index");
-
         var model = _mapper.Map<UserModel>(user);
 
         var account = _mapper.Map<UserDto>(await _userService.LoginAsync(model));
@@ -53,28 +53,14 @@ public class AuthController : Controller
         }
     }
 
-    public IActionResult Logout()
-    {
-        HttpContext.Session.Remove("Account");
-        return Redirect("/Auth/Login");
-    }
-
     public IActionResult Register()
     {
-        var currentAccount = HttpContext.Session.GetInt32("Account");
-        if (currentAccount != null)
-            return Redirect("/Home/Index");
-
         return View();
     }
 
     [HttpPost]
     public async Task<IActionResult> Register(UserDto user)
     {
-        var currentAccount = HttpContext.Session.GetInt32("Account");
-        if (currentAccount != null)
-            return Redirect("/Home/Index");
-
         try
         {
             var model = _mapper.Map<UserModel>(user);
