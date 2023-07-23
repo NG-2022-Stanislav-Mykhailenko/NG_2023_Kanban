@@ -4,8 +4,8 @@
     {
         public string Name { get; set; }
 
-        public virtual ICollection<User>? Users { get; set; } = new HashSet<User>();
+        public ICollection<User> Users { get; set; } = new List<User>();
 
-        public virtual ICollection<Column>? Columns { get; set; } = new HashSet<Column>(); 
+        public ICollection<Column> Columns { get; set; } = new List<Column>();
     }
 }

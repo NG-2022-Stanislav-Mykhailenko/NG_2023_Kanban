@@ -6,7 +6,7 @@
         public int SenderId { get; set; }
         public int CardId { get; set; }
 
-        public virtual UserDto? Sender { get; set; }
-        public virtual CardDto? Card { get; set; }
+        public UserDto Sender { get; set; }
+        public CardDto Card { get; set; }
     }
 }

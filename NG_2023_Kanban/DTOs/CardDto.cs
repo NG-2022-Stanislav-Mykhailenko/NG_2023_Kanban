@@ -8,10 +8,10 @@
         public int ColumnId { get; set; }
         public int SenderId { get; set; }
 
-        public virtual UserDto Assigned { get; set; }
-        public virtual ColumnDto Column { get; set; }
-        public virtual UserDto Sender { get; set; }
+        public UserDto Assigned { get; set; }
+        public ColumnDto Column { get; set; }
+        public UserDto Sender { get; set; }
 
-        public virtual ICollection<CommentDto> Comments { get; set; } = new HashSet<CommentDto>();
+        public ICollection<CommentDto> Comments { get; set; } = new List<CommentDto>();
     }
 }

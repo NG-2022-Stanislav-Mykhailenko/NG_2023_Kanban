@@ -4,6 +4,6 @@
     {
         public string Name { get; set; }
 
-        public virtual ICollection<UserModel>? Members { get; set; } = new HashSet<UserModel>();
+        public ICollection<UserModel> Members { get; set; } = new List<UserModel>();
     }
 }

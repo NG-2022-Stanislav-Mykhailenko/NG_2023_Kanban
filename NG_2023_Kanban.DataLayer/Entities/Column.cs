@@ -5,8 +5,8 @@
         public string Name { get; set; }
         public int BoardId { get; set; }
 
-        public virtual Board Board { get; set; }
+        public Board Board { get; set; }
 
-        public virtual ICollection<Card>? Cards { get; set; } = new HashSet<Card>();
+        public ICollection<Card> Cards { get; set; } = new List<Card>();
     }
 }

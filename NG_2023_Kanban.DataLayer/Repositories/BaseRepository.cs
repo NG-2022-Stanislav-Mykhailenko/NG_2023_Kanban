@@ -8,7 +8,7 @@ namespace NG_2023_Kanban.DataLayer.Repositories;
 
 public class BaseRepository<T> : IRepository<T> where T : BaseEntity
 {
-    private DatabaseContext _context;
+    protected DatabaseContext _context;
 
     public BaseRepository(DatabaseContext context)
         => _context = context;
